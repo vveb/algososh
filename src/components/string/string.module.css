@@ -1,0 +1,9 @@
+.container {
+  display: flex;
+  justify-content: center;
+  column-gap: 12px;
+}
+
+.input {
+  max-width: 377px;
+}
