@@ -26,3 +26,17 @@ export function* reverseStringGenerator(str: string): Generator<ViewItem<string>
     yield [...res];
   };
 };
+
+export function* calculateFiboGenerator(n: number): Generator<ViewItem<number>[], void, never> {
+  let res: ViewItem<number>[] = [];
+  for (let i=0; i<n; i++) {
+    if (i < 2) {
+      res.push({value: 1, state: ElementStates.Default});
+      yield [...res];
+    } else {
+      const current = res[i-1].value + res[i-2].value;
+      res.push({value: current, state: ElementStates.Default});
+      yield [...res];
+    }
+  }
+}

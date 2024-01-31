@@ -47,7 +47,7 @@ export const StringComponent: React.FC = () => {
         <Input extraClass={styles.input} maxLength={11} isLimitText={true} value={data} onChange={handleInputChange}></Input>
         <Button text='Развернуть' type="submit" isLoader={isAnimating} disabled={isAnimating}></Button>
       </form>
-      <div className={styles.visualisation}>
+      <div className={styles.visualization}>
         {view.map((item, index) => (<Circle letter={item.value} state={item.state} key={index} />))}
       </div>
     </SolutionLayout>
