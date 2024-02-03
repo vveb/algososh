@@ -6,10 +6,11 @@ import { Button } from "../ui/button/button";
 import { ViewItem } from "../../types/view.types";
 import { calculateFiboGenerator } from "../../utils/generators";
 import { Circle } from "../ui/circle/circle";
+import { IterableViewWithNumbers } from "../../types/generator.types";
 
 export const FibonacciPage: React.FC = () => {
 
-  const calculateFiboGeneratorRef = useRef<Generator<ViewItem<number>[], void, never> | null>(null);
+  const calculateFiboGeneratorRef = useRef<IterableViewWithNumbers | null>(null);
   const animationRef = useRef<number | undefined>(undefined);
 
   const [data, setData] = useState<number | undefined>(undefined);
@@ -32,10 +33,10 @@ export const FibonacciPage: React.FC = () => {
             animationRef.current = 0;
             calculateFiboGeneratorRef.current = null;
             setIsAnimating(false);
-          }
-        }
+          };
+        };
       }, 500)
-    }
+    };
   };
 
   const handleInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -44,9 +45,9 @@ export const FibonacciPage: React.FC = () => {
 
   return (
     <SolutionLayout title="Последовательность Фибоначчи">
-      <form className={styles.container} onSubmit={handleSubmit}>
+      <form className={styles.form} onSubmit={handleSubmit}>
         <Input extraClass={styles.input}
-          max={20}
+          max={19}
           min={1}
           isLimitText={true}
           type="number"
@@ -57,7 +58,7 @@ export const FibonacciPage: React.FC = () => {
         <Button extraClass={styles.button} text="Рассчитать" type="submit" isLoader={isAnimating} disabled={isAnimating} />
       </form>
       <div className={styles.visualization}>
-        {view.map((item, index) => (<Circle letter={String(item.value)} index={index} state={item.state} key={index} />))}
+        {view.map((item, index) => (<Circle letter={String(item.value)} index={index} state={item.state} key={item.key} />))}
       </div>
     </SolutionLayout>
   );

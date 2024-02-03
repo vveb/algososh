@@ -1,9 +1,12 @@
+import { nanoid } from "nanoid";
 import { ElementStates } from "../types/element-states";
 import { ViewItem } from "../types/view.types";
+import { IterableViewWithNumbers, IterableViewWithStrings } from "../types/generator.types";
+import { Direction } from "../types/direction";
 
-export function* reverseStringGenerator(str: string): Generator<ViewItem<string>[], void, never> {
+export function* reverseStringGenerator(str: string): IterableViewWithStrings {
   let current: string[] = str.split('');
-  let res: ViewItem<string>[] = current.map((letter) => ({value: letter, state: ElementStates.Default}));
+  let res: ViewItem<string>[] = current.map((letter) => ({value: letter, state: ElementStates.Default, key: nanoid(8)}));
   let temp;
   yield [...res];
   for (let i=0; i < Math.floor(current.length/2); i++) {
@@ -27,16 +30,51 @@ export function* reverseStringGenerator(str: string): Generator<ViewItem<string>
   };
 };
 
-export function* calculateFiboGenerator(n: number): Generator<ViewItem<number>[], void, never> {
+export function* calculateFiboGenerator(n: number): IterableViewWithNumbers {
   let res: ViewItem<number>[] = [];
-  for (let i=0; i<n; i++) {
+  for (let i=0; i<=n; i++) {
     if (i < 2) {
-      res.push({value: 1, state: ElementStates.Default});
+      res.push({value: 1, state: ElementStates.Default, key: nanoid(8)});
       yield [...res];
     } else {
       const current = res[i-1].value + res[i-2].value;
-      res.push({value: current, state: ElementStates.Default});
+      res.push({value: current, state: ElementStates.Default, key: nanoid(8)});
       yield [...res];
-    }
-  }
+    };
+  };
+};
+
+export function* selectionSortGenerator(arr: ViewItem<number>[], direction: Direction): IterableViewWithNumbers {
+  console.dir(arr)
+  console.log(direction)
 }
+
+export function* bubbleSortGenerator(arr: ViewItem<number>[], direction: Direction): IterableViewWithNumbers {
+  let res: ViewItem<number>[] = arr;
+  for (let i=0; i<arr.length-1; i++) {
+    for (let j=0; j<arr.length-i-1; j++) {
+      res[j].state = ElementStates.Changing;
+      res[j+1].state = ElementStates.Changing;
+      yield [...res];
+      if (direction === Direction.Ascending) {
+        if (res[j].value > res[j+1].value) {
+          const temp = res[j].value;
+          res[j].value = res[j+1].value;
+          res[j+1].value = temp;
+        }
+      } else {
+        if (res[j].value < res[j+1].value) {
+          const temp = res[j].value;
+          res[j].value = res[j+1].value;
+          res[j+1].value = temp;
+        }
+      }
+      yield [...res];
+      res[j].state = ElementStates.Default;
+    };
+    res[arr.length-i-1].state = ElementStates.Modified;
+    yield [...res];
+  };
+  res[0].state = ElementStates.Modified;
+  yield [...res]
+};
