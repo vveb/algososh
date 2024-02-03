@@ -25,5 +25,6 @@
   display: flex;
   justify-content: center;
   align-items: end;
+  min-height: 340px;
   column-gap: 16px;
 }

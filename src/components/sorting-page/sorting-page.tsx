@@ -1,4 +1,4 @@
-import React, { FormEvent, useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { nanoid } from "nanoid";
 import styles from './sorting-page.module.css';
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
@@ -29,8 +29,6 @@ export const SortingPage: React.FC = () => {
   const isArrayEmpty = useMemo(() => view.length === 0, [view]);
 
   const startSort = () => {
-    // console.log('submit');
-    // console.dir(sortingGeneratorRef.current)
     setIsAnimating(true);
     animationRef.current = window.setInterval(() => {
       if (sortingGeneratorRef.current) {
