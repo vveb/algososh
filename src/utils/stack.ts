@@ -6,33 +6,33 @@ class Stack<T> implements IStack<T> {
 
   private container: T[] = [];
 
-  _containerIsNotEmpty = (): boolean => {
+  private _containerIsNotEmpty = (): boolean => {
     return !!this.container.length;
   };
 
-  push = (item: T): void => {
+  public push = (item: T): void => {
     this.container.push(item);
   };
 
-  pop = (): T | undefined => {
+  public pop = (): T | undefined => {
     if (this._containerIsNotEmpty()) {
       return this.container.pop();
     };
     return undefined;
   };
 
-  clear = (): void => {
+  public clear = (): void => {
     this.container = [];
   };
 
-  getElements = (): T[] | null => {
+  public getElements = (): T[] | null => {
     if (this._containerIsNotEmpty()) {
       return [...this.container];
     };
     return null;
   };
 
-  getSize = (): number => {
+  public getSize = (): number => {
     return this.container.length;
   };
 };

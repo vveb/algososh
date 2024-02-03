@@ -13,7 +13,7 @@ export const StackPage: React.FC = () => {
 
   const [data, setData] = useState<string>('');
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
-  const [view, setView] = useState<ViewItem<number | string>[]>([]);
+  const [view, setView] = useState<ViewItem<string>[]>([]);
 
   const stack = useMemo(() => new Stack<string>(), []);
   // const stackRef = useRef<IStack<string>>(new Stack<string>());
