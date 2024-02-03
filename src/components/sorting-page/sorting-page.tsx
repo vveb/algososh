@@ -66,7 +66,7 @@ export const SortingPage: React.FC = () => {
   const randomArr = () => {
     const minLen = 3;
     const maxLen = 17;
-    const limit = Math.floor(Math.random()*(maxLen-minLen));
+    const limit = Math.floor(Math.random()*(maxLen-minLen) + minLen);
     const res = [];
     for (let i=0; i<limit; i++) {
       res.push(Math.floor(Math.random()*100));

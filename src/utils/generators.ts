@@ -45,14 +45,49 @@ export function* calculateFiboGenerator(n: number): IterableViewWithNumbers {
 };
 
 export function* selectionSortGenerator(arr: ViewItem<number>[], direction: Direction): IterableViewWithNumbers {
-  console.dir(arr)
-  console.log(direction)
-}
+  let res: ViewItem<number>[] = arr;
+  for (let i=0; i < res.length-1; i++) {
+    let targetIndex = i;
+    res[targetIndex].state = ElementStates.Changing;
+    for (let j=i+1; j < res.length; j++) {
+      res[j].state = ElementStates.Changing;
+      yield [...res]
+      if (direction === Direction.Ascending) {
+        if (res[j].value < res[targetIndex].value) {
+          res[targetIndex].state = ElementStates.Default;
+          targetIndex = j;
+        } else {
+          res[j].state = ElementStates.Default;
+        }
+      } else {
+        if (res[j].value > res[targetIndex].value) {
+          res[targetIndex].state = ElementStates.Default;
+          targetIndex = j;
+        } else {
+          res[j].state = ElementStates.Default;
+        };
+      };
+      yield [...res];
+    }
+    if (targetIndex === i) {
+      res[i].state = ElementStates.Modified;
+    } else {
+      const temp = res[i].value;
+      res[i].value = res[targetIndex].value;
+      res[targetIndex].value = temp;
+      res[i].state = ElementStates.Modified;
+      res[targetIndex].state = ElementStates.Default;
+    }
+    yield [...res];
+  }
+  res[res.length-1].state = ElementStates.Modified;
+  yield [...res];
+};
 
 export function* bubbleSortGenerator(arr: ViewItem<number>[], direction: Direction): IterableViewWithNumbers {
   let res: ViewItem<number>[] = arr;
-  for (let i=0; i<arr.length-1; i++) {
-    for (let j=0; j<arr.length-i-1; j++) {
+  for (let i=0; i<res.length-1; i++) {
+    for (let j=0; j<res.length-i-1; j++) {
       res[j].state = ElementStates.Changing;
       res[j+1].state = ElementStates.Changing;
       yield [...res];
