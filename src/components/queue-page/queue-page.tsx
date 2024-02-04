@@ -7,17 +7,35 @@ import { ViewItem } from "../../types/view.types";
 import { Circle } from "../ui/circle/circle";
 import Queue from "../../utils/queue";
 import { ElementStates } from "../../types/element-states";
-import { makeInitialView } from "../../utils/helpers";
+import { makeInitialViewItem } from "../../utils/helpers";
+import { QueueIsAnimated } from "../../types/queue.types";
 
 export const QueuePage: React.FC = () => {
-  
-  
-  
-  //TODO: для связного списка
-  //[...before, {}, ...after]
+
+  const makeInitialView = (count: number): ViewItem<string>[] => {
+    let res: ViewItem<string>[] = [];
+    for (let i=0; i<count; i++) {
+        res.push(makeInitialViewItem(''));
+    };
+    return res;
+  };
 
   const [data, setData] = useState<string>('');
-  const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const [isAnimating, setIsAnimating] = useState<QueueIsAnimated>({
+    isClearAnimating: false,
+    isDequeueAnimating: false,
+    isEnqueueAnimating: false,
+  });
+  const isAnyAnimating = useCallback(() => 
+    isAnimating.isClearAnimating ||
+    isAnimating.isDequeueAnimating ||
+    isAnimating.isEnqueueAnimating,
+    [
+      isAnimating.isClearAnimating,
+      isAnimating.isDequeueAnimating,
+      isAnimating.isEnqueueAnimating,
+    ]
+  );
   const [view, setView] = useState<ViewItem<string>[]>(makeInitialView(7));
   const [head, setHead] = useState<number | null>(null);
   const [tail, setTail] = useState<number | null>(null);
@@ -27,7 +45,7 @@ export const QueuePage: React.FC = () => {
 
   const handleEnqueueElement = () => {
     queue.enqueue(data);
-    setIsAnimating(true);
+    setIsAnimating({...isAnimating, isEnqueueAnimating: true});
     if (head === null && tail === null) {
       setView((currentView) => currentView.map((item, index) => index === 0 ?
         {...item, value: data, state: ElementStates.Changing} :
@@ -37,7 +55,7 @@ export const QueuePage: React.FC = () => {
       setTail(0);
       setTimeout(() => {
         setView((currentView) => currentView.map((item) => ({...item, state: ElementStates.Default})));
-        setIsAnimating(false);
+        setIsAnimating({...isAnimating, isEnqueueAnimating: false});
         setData('');
       }, 500);
     } else {
@@ -49,14 +67,14 @@ export const QueuePage: React.FC = () => {
       );
       setTimeout(() => {
         setView((currentView) => currentView.map((item) => ({...item, state: ElementStates.Default})));
-        setIsAnimating(false);
+        setIsAnimating({...isAnimating, isEnqueueAnimating: false});
         setData('');
       }, 500);
     };
   };
 
   const handleDequeueElement = () => {
-    setIsAnimating(true);
+    setIsAnimating({...isAnimating, isDequeueAnimating: true});
     queue.dequeue();
     if (head === tail) {
       handleClearQueue();
@@ -75,20 +93,20 @@ export const QueuePage: React.FC = () => {
             value: index === oldHead ? '' : item.value
           })
         ));
-        setIsAnimating(false);
+        setIsAnimating({...isAnimating, isDequeueAnimating: false});
       }, 500);
     };
   };
 
   const handleClearQueue = () => {
-    setIsAnimating(true);
+    setIsAnimating({...isAnimating, isClearAnimating: true});
     setView((currentView) => currentView.map((item) => ({...item, state: ElementStates.Changing})));
     queue.clear();
     setTimeout(() => {
       setView(makeInitialView(7));
       setTail(null);
       setHead(null);
-      setIsAnimating(false);
+      setIsAnimating({...isAnimating, isClearAnimating: false});
     }, 500);
   };
 
@@ -109,28 +127,28 @@ export const QueuePage: React.FC = () => {
             max={4}
             isLimitText={true}
             onChange={handleInputChange}
-            disabled={isAnimating || isQueueFull}
+            disabled={isAnyAnimating() || isQueueFull}
           />
           <Button
             text="Добавить"
             type="button"
-            isLoader={isAnimating}
-            disabled={isAnimating || !data || isQueueFull}
+            isLoader={isAnimating.isEnqueueAnimating}
+            disabled={isAnyAnimating() || !data || isQueueFull}
             onClick={handleEnqueueElement}
           />
           <Button
             text="Удалить"
             type="button"
-            isLoader={isAnimating}
-            disabled={isAnimating || queue.isEmpty}
+            isLoader={isAnimating.isDequeueAnimating}
+            disabled={isAnyAnimating() || queue.isEmpty}
             onClick={handleDequeueElement}
           />
         </div>
         <Button
             text="Очистить"
             type="button"
-            isLoader={isAnimating}
-            disabled={isAnimating || queue.isEmpty}
+            isLoader={isAnimating.isClearAnimating}
+            disabled={isAnyAnimating() || queue.isEmpty}
             onClick={handleClearQueue}
           />
       </form>

@@ -13,11 +13,15 @@
 }
 
 .input {
-  max-width: 204px;
+  width: 204px;
 }
 
 .smallButton {
   min-width: 175px;
+}
+
+.bigButton {
+  min-width: 362px;
 }
 
 .controls_bottom {
@@ -28,11 +32,21 @@
 .visualization {
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   min-height: 174px;
 }
 
 .box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 16px;
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.item {
   display: flex;
   justify-content: center;
   align-items: center;

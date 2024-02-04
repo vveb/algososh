@@ -3,6 +3,7 @@ import { ElementStates } from "../types/element-states";
 import { ViewItem } from "../types/view.types";
 import { IterableViewWithNumbers, IterableViewWithStrings } from "../types/generator.types";
 import { Direction } from "../types/direction";
+import { makeInitialViewItem } from "./helpers";
 
 export function* reverseStringGenerator(str: string): IterableViewWithStrings {
   let current: string[] = str.split('');
@@ -112,4 +113,140 @@ export function* bubbleSortGenerator(arr: ViewItem<number>[], direction: Directi
   };
   res[0].state = ElementStates.Modified;
   yield [...res]
+};
+
+export function* addElementToHeadGenerator (arr: ViewItem<string>[], value: string): IterableViewWithStrings {
+  const item = makeInitialViewItem(value);
+  if (arr.length === 0) {
+    const newItem = makeInitialViewItem('');
+    item.state = ElementStates.Changing;
+    newItem.head = item;
+    yield[newItem]
+    newItem.head = '';
+    newItem.value = value;
+    newItem.state = ElementStates.Modified;
+    yield[newItem]
+    newItem.state = ElementStates.Default;
+    yield[newItem]
+    return
+  }
+  const [first, ...rest] = arr;
+  if (first) {
+    item.state = ElementStates.Changing;
+    first.head = item;
+    yield[first, ...rest]
+  }
+  item.state = ElementStates.Modified;
+  first.head = ''
+  yield[item, ...arr]
+  item.state = ElementStates.Default;
+  yield[item, ...arr]
+}
+
+export function* addElementToTailGenerator (arr: ViewItem<string>[], value: string): IterableViewWithStrings {
+  const item = makeInitialViewItem(value);
+  if (arr.length === 0) {
+    const newItem = makeInitialViewItem('');
+    item.state = ElementStates.Changing;
+    newItem.head = item;
+    yield[newItem]
+    newItem.head = '';
+    newItem.value = value;
+    newItem.state = ElementStates.Modified;
+    yield[newItem]
+    newItem.state = ElementStates.Default;
+    yield[newItem]
+    return
+  }
+  const last = arr[arr.length-1]
+  if (last) {
+    item.state = ElementStates.Changing;
+    last.head = item;
+    yield[...arr.slice(0, arr.length-1), last]
+  }
+  item.state = ElementStates.Modified;
+  last.head = '';
+  yield[...arr, item];
+  item.state = ElementStates.Default;
+  yield[...arr, item];
+};
+
+export function* deleteElementFromHeadGenerator (arr: ViewItem<string>[]): IterableViewWithStrings {
+  const [first, ...rest] = arr;
+  if (first) {
+    first.state = ElementStates.Changing;
+    yield[...arr];
+    first.tail = {...first};
+    first.value = '';
+    first.state = ElementStates.Default;
+    yield[...arr];
+    yield[...rest];
+  };
+};
+
+export function* deleteElementFromTailGenerator (arr: ViewItem<string>[]): IterableViewWithStrings {
+  const last = arr[arr.length-1]
+  if (last) {
+    last.state = ElementStates.Changing;
+    yield[...arr];
+    last.tail = {...last};
+    last.value = '';
+    last.state = ElementStates.Default;
+    yield[...arr];
+    yield[...arr.slice(0, arr.length-1)];
+  };
+};
+
+export function* addElementAtIndexGenerator (arr: ViewItem<string>[], index: number, value: string): IterableViewWithStrings {
+  const item = makeInitialViewItem(value);
+  if (arr.length === 0) {
+    const newItem = makeInitialViewItem('');
+    item.state = ElementStates.Changing;
+    newItem.head = item;
+    yield[newItem]
+    newItem.head = '';
+    newItem.value = value;
+    newItem.state = ElementStates.Modified;
+    yield[newItem]
+    newItem.state = ElementStates.Default;
+    yield[newItem]
+    return
+  }
+  const [first,] = arr;
+  const begin = arr.slice(0, index);
+  const end = arr.slice(index);
+  item.state = ElementStates.Changing;
+  first.head = item;
+  yield[...arr]
+  let currentIndex = 0;
+  while(currentIndex !== index) {
+    arr[currentIndex].state = ElementStates.Changing;
+    arr[currentIndex].head = '';
+    arr[currentIndex+1].head = item;
+    currentIndex++;
+    yield[...arr]
+  }
+  arr[currentIndex].head='';
+  item.state = ElementStates.Modified;
+  const res = [...begin, item, ...end]
+  yield[...res]
+  yield[...res.map((item) => ({...item, state: ElementStates.Default}))]
+}
+
+export function* deleteElementFromIndexGenerator (arr: ViewItem<string>[], index: number): IterableViewWithStrings {
+  const begin = arr.slice(0, index);
+  const end = arr.slice(index+1);
+  let currentIndex = 0;
+  while (currentIndex !== index) {
+    arr[currentIndex].state = ElementStates.Changing;
+    currentIndex++;
+    yield[...arr];
+  }
+  arr[currentIndex].state = ElementStates.Changing;
+  yield[...arr];
+  arr[currentIndex].tail = {...arr[currentIndex]};
+  arr[currentIndex].value = '';
+  yield[...arr];
+  const res = [...begin, ...end].map((item) => ({...item, state: ElementStates.Default}));
+  yield[...res];
 };

@@ -16,6 +16,7 @@ export const SortingPage: React.FC = () => {
 
   const [view, setView] = useState<ViewItem<number>[]>([]);
   const [sortType, setSortType] = useState<SortingType>(SortingType.Selection);
+  const [sortDirection, setSortDirection] = useState<Direction | null>(null)
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
 
   const sortingGeneratorRef = useRef<IterableViewWithNumbers | null>(null);
@@ -41,6 +42,7 @@ export const SortingPage: React.FC = () => {
           animationRef.current = 0;
           sortingGeneratorRef.current = null;
           setIsAnimating(false);
+          setSortDirection(null);
         };
       }
     }, 1000)
@@ -48,11 +50,13 @@ export const SortingPage: React.FC = () => {
 
   const handleStartSortingAsc = () => {
     sortingGeneratorRef.current = sortingGenerators[sortType](view, Direction.Ascending)
+    setSortDirection(Direction.Ascending);
     startSort();
   }
 
   const handleStartSortingDesc = () => {
     sortingGeneratorRef.current = sortingGenerators[sortType](view, Direction.Descending)
+    setSortDirection(Direction.Descending);
     startSort();
   }
 
@@ -82,6 +86,7 @@ export const SortingPage: React.FC = () => {
             value={SortingType.Selection}
             checked={sortType === SortingType.Selection}
             onChange={handleChangeSortingType}
+            disabled={isAnimating}
           />
           <RadioInput
             label="Пузырёк"
@@ -89,6 +94,7 @@ export const SortingPage: React.FC = () => {
             value={SortingType.Bubble}
             checked={sortType === SortingType.Bubble}
             onChange={handleChangeSortingType}
+            disabled={isAnimating}
           />
         </div>
         <div className={styles.submitButtons}>
@@ -96,7 +102,7 @@ export const SortingPage: React.FC = () => {
             text="По возрастанию"
             sorting={Direction.Ascending}
             type="button"
-            isLoader={isAnimating}
+            isLoader={(isAnimating && sortDirection === Direction.Ascending)}
             disabled={isAnimating || isArrayEmpty}
             onClick={handleStartSortingAsc}
           />
@@ -104,7 +110,7 @@ export const SortingPage: React.FC = () => {
             text="По убыванию"
             sorting={Direction.Descending}
             type="button"
-            isLoader={isAnimating}
+            isLoader={(isAnimating && sortDirection === Direction.Descending)}
             disabled={isAnimating || isArrayEmpty}
             onClick={handleStartSortingDesc}
           />

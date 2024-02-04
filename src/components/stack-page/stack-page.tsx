@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useMemo, useState } from "react";
+import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
 import styles from './stack-page.module.css';
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Input } from "../ui/input/input";
@@ -8,20 +8,34 @@ import { Circle } from "../ui/circle/circle";
 import Stack from "../../utils/stack";
 import { ElementStates } from "../../types/element-states";
 import { nanoid } from "nanoid";
+import { StackIsAnimated } from "../../types/stack.types";
 
 export const StackPage: React.FC = () => {
 
   const [data, setData] = useState<string>('');
-  const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const [isAnimating, setIsAnimating] = useState<StackIsAnimated>({
+    isPushAnimating: false,
+    isPopAnimating: false,
+    isClearAnimating: false,
+  });
+  const isAnyAnimating = useCallback(() => 
+    isAnimating.isPushAnimating ||
+    isAnimating.isPopAnimating ||
+    isAnimating.isClearAnimating,
+    [
+      isAnimating.isPushAnimating,
+      isAnimating.isPopAnimating,
+      isAnimating.isClearAnimating
+    ]
+  );
   const [view, setView] = useState<ViewItem<string>[]>([]);
 
   const stack = useMemo(() => new Stack<string>(), []);
-  // const stackRef = useRef<IStack<string>>(new Stack<string>());
   const isStackEmpty = useMemo(() => view.length === 0, [view]);
 
   const handleAddElement = () => {
     if (data) {
-      setIsAnimating(true);
+      setIsAnimating({...isAnimating, isPushAnimating: true});
       stack.push(data);
       setView((currentView) => [...currentView, {value: data, state: ElementStates.Changing, key: nanoid(8)}]);
       setTimeout(() => {
@@ -29,14 +43,14 @@ export const StackPage: React.FC = () => {
           {...item, state: ElementStates.Default} :
           item));
         setData('');
-        setIsAnimating(false);
+        setIsAnimating({...isAnimating, isPushAnimating: false});
       }, 500);
     };
   };
 
   const handleDeleteElement = () => {
     if (!isStackEmpty) {
-      setIsAnimating(true);
+      setIsAnimating({...isAnimating, isPopAnimating: true});
       const last = view.length - 1;
       setView((currentView) => currentView.map((item, index) => index === last ?
         {...item, state: ElementStates.Changing} :
@@ -44,19 +58,19 @@ export const StackPage: React.FC = () => {
       setTimeout(() => {
         stack.pop();
         setView((currentView) => currentView.filter((item) => item.state !== ElementStates.Changing));
-        setIsAnimating(false);
+        setIsAnimating({...isAnimating, isPopAnimating: false});
       }, 500)
     };
   };
 
   const handleClearStack = () => {
     if (!isStackEmpty) {
-      setIsAnimating(true);
+      setIsAnimating({...isAnimating, isClearAnimating: true});
       setView((currentView) => currentView.map((item) => ({...item, state: ElementStates.Changing})));
       setTimeout(() => {
         stack.clear();
         setView([]);
-        setIsAnimating(false);
+        setIsAnimating({...isAnimating, isClearAnimating: false});
       }, 500)
     };
   };
@@ -78,28 +92,28 @@ export const StackPage: React.FC = () => {
             max={4}
             isLimitText={true}
             onChange={handleInputChange}
-            disabled={isAnimating}
+            disabled={isAnyAnimating()}
           />
           <Button
             text="Добавить"
             type="button"
-            isLoader={isAnimating}
-            disabled={isAnimating || !data}
+            isLoader={isAnimating.isPushAnimating}
+            disabled={isAnyAnimating() || !data}
             onClick={handleAddElement}
           />
           <Button
             text="Удалить"
             type="button"
-            isLoader={isAnimating}
-            disabled={isAnimating || isStackEmpty}
+            isLoader={isAnimating.isPopAnimating}
+            disabled={isAnyAnimating() || isStackEmpty}
             onClick={handleDeleteElement}
           />
         </div>
         <Button
             text="Очистить"
             type="button"
-            isLoader={isAnimating}
-            disabled={isAnimating || isStackEmpty}
+            isLoader={isAnimating.isClearAnimating}
+            disabled={isAnyAnimating() || isStackEmpty}
             onClick={handleClearStack}
           />
       </form>

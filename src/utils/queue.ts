@@ -27,7 +27,7 @@ class Queue<T> implements IQueue<T> {
     return this.length;
   }
 
-  public enqueue (item: T): void {
+  public enqueue(item: T): void {
     const node = new QueueNode(item);
     if (this.isEmpty) {
       this.head = node;
@@ -39,7 +39,7 @@ class Queue<T> implements IQueue<T> {
     this.length++;
   };
   
-  public dequeue (): T | null {
+  public dequeue(): T | null {
     if (this.isEmpty) {
       return null
     };
@@ -65,7 +65,7 @@ class Queue<T> implements IQueue<T> {
     return null;
   };
 
-  clear = (): void => {
+  public clear(): void {
     this.head = null;
     this.tail = null;
     this.length = 0;

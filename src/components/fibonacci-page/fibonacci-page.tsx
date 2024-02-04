@@ -13,7 +13,7 @@ export const FibonacciPage: React.FC = () => {
   const calculateFiboGeneratorRef = useRef<IterableViewWithNumbers | null>(null);
   const animationRef = useRef<number | undefined>(undefined);
 
-  const [data, setData] = useState<number | undefined>(undefined);
+  const [data, setData] = useState<number>(0);
   const [view, setView] = useState<ViewItem<number>[]>([]);
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
 
@@ -32,6 +32,7 @@ export const FibonacciPage: React.FC = () => {
             window.clearInterval(animationRef.current);
             animationRef.current = 0;
             calculateFiboGeneratorRef.current = null;
+            setData(0);
             setIsAnimating(false);
           };
         };
@@ -54,6 +55,7 @@ export const FibonacciPage: React.FC = () => {
           value={data}
           onChange={handleInputChange}
           placeholder="Введите число"
+          disabled={isAnimating}
         />
         <Button extraClass={styles.button} text="Рассчитать" type="submit" isLoader={isAnimating} disabled={isAnimating} />
       </form>

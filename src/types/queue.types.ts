@@ -9,3 +9,9 @@ export interface IQueue<T> {
   clear: () => void;
   isEmpty: boolean,
 };
+
+export type QueueIsAnimated = {
+  isEnqueueAnimating: boolean,
+  isDequeueAnimating: boolean,
+  isClearAnimating: boolean,
+};
