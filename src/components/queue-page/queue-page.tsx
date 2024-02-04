@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useMemo, useState } from "react";
+import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
 import styles from './queue-page.module.css';
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Input } from "../ui/input/input";
@@ -7,18 +7,14 @@ import { ViewItem } from "../../types/view.types";
 import { Circle } from "../ui/circle/circle";
 import Queue from "../../utils/queue";
 import { ElementStates } from "../../types/element-states";
-import { nanoid } from "nanoid";
+import { makeInitialView } from "../../utils/helpers";
 
 export const QueuePage: React.FC = () => {
   
-  const makeInitialViewItem = (): ViewItem<string> => ({value: '', state: ElementStates.Default, key: nanoid(8)});
-  const makeInitialView = (count: number): ViewItem<string>[] => {
-    let res: ViewItem<string>[] = [];
-    for (let i=0; i<count; i++) {
-      res.push(makeInitialViewItem())
-    };
-    return res;
-  }
+  
+  
+  //TODO: для связного списка
+  //[...before, {}, ...after]
 
   const [data, setData] = useState<string>('');
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
@@ -44,7 +40,6 @@ export const QueuePage: React.FC = () => {
         setIsAnimating(false);
         setData('');
       }, 500);
-      
     } else {
       setTail((currentTail) => currentTail !== null ? (currentTail + 1) % 7 : null);
       const newTail = tail !== null ? (tail + 1) % 7 : null;
@@ -57,8 +52,8 @@ export const QueuePage: React.FC = () => {
         setIsAnimating(false);
         setData('');
       }, 500);
-    }
-  }
+    };
+  };
 
   const handleDequeueElement = () => {
     setIsAnimating(true);
@@ -95,7 +90,7 @@ export const QueuePage: React.FC = () => {
       setHead(null);
       setIsAnimating(false);
     }, 500);
-  }
+  };
 
   const handleInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setData(String(evt.target.value));
