@@ -1,0 +1,40 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 38px;
+  margin-bottom: 30px;
+}
+
+.controls_top {
+  display: flex;
+  column-gap: 12px;
+  max-width: 952px;
+}
+
+.input {
+  max-width: 204px;
+}
+
+.smallButton {
+  min-width: 175px;
+}
+
+.controls_bottom {
+  display: flex;
+  column-gap: 12px;
+}
+
+.visualization {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  min-height: 174px;
+}
+
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 16px;
+}

@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import { nanoid } from "nanoid";
 import styles from './sorting-page.module.css';
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
@@ -61,7 +61,7 @@ export const SortingPage: React.FC = () => {
     setSortType(value as SortingType);
   }
 
-  const randomArr = () => {
+  const randomArr = useCallback(() => {
     const minLen = 3;
     const maxLen = 17;
     const limit = Math.floor(Math.random()*(maxLen-minLen) + minLen);
@@ -70,7 +70,7 @@ export const SortingPage: React.FC = () => {
       res.push(Math.floor(Math.random()*100));
     };
     setView(res.map((num) => ({value: num, state: ElementStates.Default, key: nanoid(8)})));
-  }
+  }, []);
 
   return (
     <SolutionLayout title="Сортировка массива">
