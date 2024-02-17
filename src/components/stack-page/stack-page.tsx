@@ -10,12 +10,13 @@ import { ElementStates } from "../../types/element-states";
 import { nanoid } from "nanoid";
 import { StackIsAnimated } from "../../types/stack.types";
 import { useMounted } from "../../hooks/use-mounted.hook";
+import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 
 export const StackPage: React.FC = () => {
 
   const isAlive = useMounted();
 
-  const [data, setData] = useState<string>('');
+  const [inputData, setInputData] = useState<string>('');
   const [isAnimating, setIsAnimating] = useState<StackIsAnimated>({
     isPushAnimating: false,
     isPopAnimating: false,
@@ -37,20 +38,20 @@ export const StackPage: React.FC = () => {
   const isStackEmpty = useMemo(() => view.length === 0, [view]);
 
   const handleAddElement = () => {
-    if (data) {
+    if (inputData) {
       setIsAnimating({...isAnimating, isPushAnimating: true});
-      stack.push(data);
-      setView((currentView) => [...currentView, {value: data, state: ElementStates.Changing, key: nanoid(8)}]);
+      stack.push(inputData);
+      setView((currentView) => [...currentView, {value: inputData, state: ElementStates.Changing, key: nanoid(8)}]);
       setTimeout(() => {
         if (isAlive) {
           setView((currentView) => currentView.map((item) => item.state !== ElementStates.Default ?
             {...item, state: ElementStates.Default} :
             item
           ));
-          setData('');
+          setInputData('');
           setIsAnimating({...isAnimating, isPushAnimating: false});
         };
-      }, 500);
+      }, SHORT_DELAY_IN_MS);
     };
   };
 
@@ -65,7 +66,7 @@ export const StackPage: React.FC = () => {
         stack.pop();
         setView((currentView) => currentView.filter((item) => item.state !== ElementStates.Changing));
         setIsAnimating({...isAnimating, isPopAnimating: false});
-      }, 500);
+      }, SHORT_DELAY_IN_MS);
     };
   };
 
@@ -79,12 +80,12 @@ export const StackPage: React.FC = () => {
           setView([]);
           setIsAnimating({...isAnimating, isClearAnimating: false});
         };
-      }, 500);
+      }, SHORT_DELAY_IN_MS);
     };
   };
 
   const handleInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    setData(String(evt.target.value));
+    setInputData(String(evt.target.value));
   };
 
   return (
@@ -94,7 +95,7 @@ export const StackPage: React.FC = () => {
           <Input
             extraClass={styles.input}
             placeholder="Введите текст"
-            value={data}
+            value={inputData}
             type="text"
             maxLength={4}
             max={4}
@@ -106,7 +107,7 @@ export const StackPage: React.FC = () => {
             text="Добавить"
             type="button"
             isLoader={isAnimating.isPushAnimating}
-            disabled={isAnyAnimating() || !data}
+            disabled={isAnyAnimating() || !inputData}
             onClick={handleAddElement}
           />
           <Button

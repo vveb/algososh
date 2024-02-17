@@ -8,6 +8,7 @@ import { calculateFiboGenerator } from "../../utils/generators";
 import { Circle } from "../ui/circle/circle";
 import { IterableViewWithNumbers } from "../../types/generator.types";
 import { useMounted } from "../../hooks/use-mounted.hook";
+import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 
 export const FibonacciPage: React.FC = () => {
 
@@ -22,14 +23,14 @@ export const FibonacciPage: React.FC = () => {
   const calculateFiboGeneratorRef = useRef<IterableViewWithNumbers | null>(null);
   const animationRef = useRef<number | undefined>(undefined);
 
-  const [data, setData] = useState<number>(0);
+  const [inputData, setInputData] = useState(0);
   const [view, setView] = useState<ViewItem<number>[]>([]);
-  const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    if (data) {
-      calculateFiboGeneratorRef.current = calculateFiboGenerator(data);
+    if (inputData) {
+      calculateFiboGeneratorRef.current = calculateFiboGenerator(inputData);
       setIsAnimating(true);
       animationRef.current = window.setInterval(() => {
         if (isAlive) {
@@ -42,17 +43,17 @@ export const FibonacciPage: React.FC = () => {
               window.clearInterval(animationRef.current);
               animationRef.current = 0;
               calculateFiboGeneratorRef.current = null;
-              setData(0);
+              setInputData(0);
               setIsAnimating(false);
             };
           };
         };
-      }, 500);
+      }, SHORT_DELAY_IN_MS);
     };
   };
 
   const handleInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    setData(Number(evt.target.value));
+    setInputData(Number(evt.target.value));
   };
 
   return (
@@ -63,7 +64,7 @@ export const FibonacciPage: React.FC = () => {
           min={1}
           isLimitText={true}
           type="number"
-          value={data}
+          value={inputData}
           onChange={handleInputChange}
           placeholder="Введите число"
           disabled={isAnimating}

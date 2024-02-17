@@ -12,6 +12,7 @@ import { LinkedListActions, LinkedListIsAnimated } from "../../types/linked-list
 import { addElementAtIndexGenerator, addElementToHeadGenerator, addElementToTailGenerator, deleteElementFromHeadGenerator, deleteElementFromIndexGenerator, deleteElementFromTailGenerator } from "../../utils/generators";
 import { IterableViewWithStrings } from "../../types/generator.types";
 import { useMounted } from "../../hooks/use-mounted.hook";
+import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 
 export const ListPage: React.FC = () => {
 
@@ -34,8 +35,8 @@ export const ListPage: React.FC = () => {
     setView(arr);
   }, [linkedList]);
 
-  const [elementData, setElementData] = useState<string>('');
-  const [indexData, setIndexData] = useState<number>(0);
+  const [elementData, setElementData] = useState('');
+  const [indexData, setIndexData] = useState(0);
   const isIndexDataValid = useMemo(() => indexData >= 0 && indexData < view.length, [indexData, view.length]);
 
   const [isAnimating, setIsAnimating] = useState<LinkedListIsAnimated>({
@@ -84,8 +85,8 @@ export const ListPage: React.FC = () => {
           };
         };
       };
-    }, 500);
-  }, [stopAllAnimating]);
+    }, SHORT_DELAY_IN_MS);
+  }, [stopAllAnimating, isAlive]);
 
   const linkedListGenerators = useMemo(() => ({
     [LinkedListActions.AddToHead]: addElementToHeadGenerator,

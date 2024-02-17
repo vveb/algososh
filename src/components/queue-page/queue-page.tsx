@@ -10,6 +10,7 @@ import { ElementStates } from "../../types/element-states";
 import { makeInitialViewItem } from "../../utils/helpers";
 import { QueueIsAnimated } from "../../types/queue.types";
 import { useMounted } from "../../hooks/use-mounted.hook";
+import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 
 export const QueuePage: React.FC = () => {
 
@@ -23,7 +24,7 @@ export const QueuePage: React.FC = () => {
     return res;
   };
 
-  const [data, setData] = useState<string>('');
+  const [inputData, setInputData] = useState('');
   const [isAnimating, setIsAnimating] = useState<QueueIsAnimated>({
     isClearAnimating: false,
     isDequeueAnimating: false,
@@ -47,11 +48,11 @@ export const QueuePage: React.FC = () => {
   const isQueueFull = useMemo(() => queue.size >= 7, [queue.size]);
 
   const handleEnqueueElement = () => {
-    queue.enqueue(data);
+    queue.enqueue(inputData);
     setIsAnimating({...isAnimating, isEnqueueAnimating: true});
     if (head === null && tail === null) {
       setView((currentView) => currentView.map((item, index) => index === 0 ?
-        {...item, value: data, state: ElementStates.Changing} :
+        {...item, value: inputData, state: ElementStates.Changing} :
         item)
       );
       setHead(0);
@@ -60,23 +61,23 @@ export const QueuePage: React.FC = () => {
         if (isAlive) {
           setView((currentView) => currentView.map((item) => ({...item, state: ElementStates.Default})));
           setIsAnimating({...isAnimating, isEnqueueAnimating: false});
-          setData('');
+          setInputData('');
         }
-      }, 500);
+      }, SHORT_DELAY_IN_MS);
     } else {
       setTail((currentTail) => currentTail !== null ? (currentTail + 1) % 7 : null);
       const newTail = tail !== null ? (tail + 1) % 7 : null;
       setView((currentView) => currentView.map((item, index) => index === newTail ?
-          {...item, value: data, state: ElementStates.Changing} :
+          {...item, value: inputData, state: ElementStates.Changing} :
           item)
       );
       setTimeout(() => {
         if (isAlive) {
           setView((currentView) => currentView.map((item) => ({...item, state: ElementStates.Default})));
           setIsAnimating({...isAnimating, isEnqueueAnimating: false});
-          setData('');
+          setInputData('');
         }
-      }, 500);
+      }, SHORT_DELAY_IN_MS);
     };
   };
 
@@ -103,7 +104,7 @@ export const QueuePage: React.FC = () => {
           ));
           setIsAnimating({...isAnimating, isDequeueAnimating: false});
         }
-      }, 500);
+      }, SHORT_DELAY_IN_MS);
     };
   };
 
@@ -118,11 +119,11 @@ export const QueuePage: React.FC = () => {
         setHead(null);
         setIsAnimating({...isAnimating, isClearAnimating: false});
       }
-    }, 500);
+    }, SHORT_DELAY_IN_MS);
   };
 
   const handleInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    setData(String(evt.target.value));
+    setInputData(String(evt.target.value));
   };
 
   return (
@@ -132,7 +133,7 @@ export const QueuePage: React.FC = () => {
           <Input
             extraClass={styles.input}
             placeholder="Введите значение"
-            value={data}
+            value={inputData}
             type="text"
             maxLength={4}
             max={4}
@@ -144,7 +145,7 @@ export const QueuePage: React.FC = () => {
             text="Добавить"
             type="button"
             isLoader={isAnimating.isEnqueueAnimating}
-            disabled={isAnyAnimating() || !data || isQueueFull}
+            disabled={isAnyAnimating() || !inputData || isQueueFull}
             onClick={handleEnqueueElement}
           />
           <Button

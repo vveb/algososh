@@ -12,6 +12,7 @@ import { Column } from "../ui/column/column";
 import { IterableViewWithNumbers } from "../../types/generator.types";
 import { bubbleSortGenerator, selectionSortGenerator } from "../../utils/generators";
 import { useMounted } from "../../hooks/use-mounted.hook";
+import { DELAY_IN_MS } from "../../constants/delays";
 
 export const SortingPage: React.FC = () => {
 
@@ -20,7 +21,7 @@ export const SortingPage: React.FC = () => {
   const [view, setView] = useState<ViewItem<number>[]>([]);
   const [sortType, setSortType] = useState<SortingType>(SortingType.Selection);
   const [sortDirection, setSortDirection] = useState<Direction | null>(null)
-  const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const sortingGeneratorRef = useRef<IterableViewWithNumbers | null>(null);
   const animationRef = useRef<number | undefined>(undefined);
@@ -50,7 +51,7 @@ export const SortingPage: React.FC = () => {
           };
         };
       };
-    }, 1000);
+    }, DELAY_IN_MS);
   };
 
   const handleStartSortingAsc = () => {
