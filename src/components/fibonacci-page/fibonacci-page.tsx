@@ -7,8 +7,17 @@ import { ViewItem } from "../../types/view.types";
 import { calculateFiboGenerator } from "../../utils/generators";
 import { Circle } from "../ui/circle/circle";
 import { IterableViewWithNumbers } from "../../types/generator.types";
+import { useMounted } from "../../hooks/use-mounted.hook";
 
 export const FibonacciPage: React.FC = () => {
+
+  /*
+  isAlive сделано с помощью кастомного хука, чтобы избежать ошибки, когда
+  компонент размонтируется до того, как закончится исполнение асинхронного действия,
+  например, в setTimeOut или setInterval
+  */
+ 
+  const isAlive = useMounted();
 
   const calculateFiboGeneratorRef = useRef<IterableViewWithNumbers | null>(null);
   const animationRef = useRef<number | undefined>(undefined);
@@ -23,20 +32,22 @@ export const FibonacciPage: React.FC = () => {
       calculateFiboGeneratorRef.current = calculateFiboGenerator(data);
       setIsAnimating(true);
       animationRef.current = window.setInterval(() => {
-        if (calculateFiboGeneratorRef.current) {
-          const { value: view, done } = calculateFiboGeneratorRef.current.next();
-          if (view) {
-            setView(view);
-          };
-          if (done) {
-            window.clearInterval(animationRef.current);
-            animationRef.current = 0;
-            calculateFiboGeneratorRef.current = null;
-            setData(0);
-            setIsAnimating(false);
+        if (isAlive) {
+          if (calculateFiboGeneratorRef.current) {
+            const { value: view, done } = calculateFiboGeneratorRef.current.next();
+            if (view) {
+              setView(view);
+            };
+            if (done) {
+              window.clearInterval(animationRef.current);
+              animationRef.current = 0;
+              calculateFiboGeneratorRef.current = null;
+              setData(0);
+              setIsAnimating(false);
+            };
           };
         };
-      }, 500)
+      }, 500);
     };
   };
 

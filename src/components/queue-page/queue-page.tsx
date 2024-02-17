@@ -9,8 +9,11 @@ import Queue from "../../utils/queue";
 import { ElementStates } from "../../types/element-states";
 import { makeInitialViewItem } from "../../utils/helpers";
 import { QueueIsAnimated } from "../../types/queue.types";
+import { useMounted } from "../../hooks/use-mounted.hook";
 
 export const QueuePage: React.FC = () => {
+
+  const isAlive = useMounted();
 
   const makeInitialView = (count: number): ViewItem<string>[] => {
     let res: ViewItem<string>[] = [];
@@ -54,9 +57,11 @@ export const QueuePage: React.FC = () => {
       setHead(0);
       setTail(0);
       setTimeout(() => {
-        setView((currentView) => currentView.map((item) => ({...item, state: ElementStates.Default})));
-        setIsAnimating({...isAnimating, isEnqueueAnimating: false});
-        setData('');
+        if (isAlive) {
+          setView((currentView) => currentView.map((item) => ({...item, state: ElementStates.Default})));
+          setIsAnimating({...isAnimating, isEnqueueAnimating: false});
+          setData('');
+        }
       }, 500);
     } else {
       setTail((currentTail) => currentTail !== null ? (currentTail + 1) % 7 : null);
@@ -66,9 +71,11 @@ export const QueuePage: React.FC = () => {
           item)
       );
       setTimeout(() => {
-        setView((currentView) => currentView.map((item) => ({...item, state: ElementStates.Default})));
-        setIsAnimating({...isAnimating, isEnqueueAnimating: false});
-        setData('');
+        if (isAlive) {
+          setView((currentView) => currentView.map((item) => ({...item, state: ElementStates.Default})));
+          setIsAnimating({...isAnimating, isEnqueueAnimating: false});
+          setData('');
+        }
       }, 500);
     };
   };
@@ -85,15 +92,17 @@ export const QueuePage: React.FC = () => {
           item)
       );
       setTimeout(() => {
-        setHead((currentHead) => currentHead !== null ? (currentHead + 1) % 7 : null);
-        setView((currentView) => currentView.map(
-          (item, index) => ({
-            ...item,
-            state: ElementStates.Default,
-            value: index === oldHead ? '' : item.value
-          })
-        ));
-        setIsAnimating({...isAnimating, isDequeueAnimating: false});
+        if (isAlive) {
+          setHead((currentHead) => currentHead !== null ? (currentHead + 1) % 7 : null);
+          setView((currentView) => currentView.map(
+            (item, index) => ({
+              ...item,
+              state: ElementStates.Default,
+              value: index === oldHead ? '' : item.value
+            })
+          ));
+          setIsAnimating({...isAnimating, isDequeueAnimating: false});
+        }
       }, 500);
     };
   };
@@ -103,10 +112,12 @@ export const QueuePage: React.FC = () => {
     setView((currentView) => currentView.map((item) => ({...item, state: ElementStates.Changing})));
     queue.clear();
     setTimeout(() => {
-      setView(makeInitialView(7));
-      setTail(null);
-      setHead(null);
-      setIsAnimating({...isAnimating, isClearAnimating: false});
+      if (isAlive) {
+        setView(makeInitialView(7));
+        setTail(null);
+        setHead(null);
+        setIsAnimating({...isAnimating, isClearAnimating: false});
+      }
     }, 500);
   };
 

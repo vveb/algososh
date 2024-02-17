@@ -8,8 +8,11 @@ import { ViewItem } from "../../types/view.types";
 import { DELAY } from "../../utils/constants";
 import { reverseStringGenerator } from "../../utils/generators";
 import { IterableViewWithStrings } from "../../types/generator.types";
+import { useMounted } from "../../hooks/use-mounted.hook";
 
 export const StringComponent: React.FC = () => {
+
+  const isAlive = useMounted();
 
   const reverseStringGeneratorRef = useRef<IterableViewWithStrings | null>(null);
   const animationRef = useRef<number | undefined>(undefined);
@@ -27,16 +30,18 @@ export const StringComponent: React.FC = () => {
     reverseStringGeneratorRef.current = reverseStringGenerator(data);
     setIsAnimating(true);
     animationRef.current = window.setInterval(() => {
-      if (reverseStringGeneratorRef.current) {
-        const { value: view, done } = reverseStringGeneratorRef.current.next();
-        if (view) {
-          setView(view);
-        };
-        if (done) {
-          window.clearInterval(animationRef.current);
-          animationRef.current = 0;
-          reverseStringGeneratorRef.current = null;
-          setIsAnimating(false);
+      if (isAlive) {
+        if (reverseStringGeneratorRef.current) {
+          const { value: view, done } = reverseStringGeneratorRef.current.next();
+          if (view) {
+            setView(view);
+          };
+          if (done) {
+            window.clearInterval(animationRef.current);
+            animationRef.current = 0;
+            reverseStringGeneratorRef.current = null;
+            setIsAnimating(false);
+          };
         };
       };
     }, DELAY);

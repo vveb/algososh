@@ -11,8 +11,11 @@ import { ElementStates } from "../../types/element-states";
 import { Column } from "../ui/column/column";
 import { IterableViewWithNumbers } from "../../types/generator.types";
 import { bubbleSortGenerator, selectionSortGenerator } from "../../utils/generators";
+import { useMounted } from "../../hooks/use-mounted.hook";
 
 export const SortingPage: React.FC = () => {
+
+  const isAlive = useMounted();
 
   const [view, setView] = useState<ViewItem<number>[]>([]);
   const [sortType, setSortType] = useState<SortingType>(SortingType.Selection);
@@ -32,38 +35,40 @@ export const SortingPage: React.FC = () => {
   const startSort = () => {
     setIsAnimating(true);
     animationRef.current = window.setInterval(() => {
-      if (sortingGeneratorRef.current) {
-        const { value: view, done } = sortingGeneratorRef.current.next();
-        if (view) {
-          setView(view);
+      if (isAlive) {
+        if (sortingGeneratorRef.current) {
+          const { value: view, done } = sortingGeneratorRef.current.next();
+          if (view) {
+            setView(view);
+          };
+          if (done) {
+            window.clearInterval(animationRef.current);
+            animationRef.current = 0;
+            sortingGeneratorRef.current = null;
+            setIsAnimating(false);
+            setSortDirection(null);
+          };
         };
-        if (done) {
-          window.clearInterval(animationRef.current);
-          animationRef.current = 0;
-          sortingGeneratorRef.current = null;
-          setIsAnimating(false);
-          setSortDirection(null);
-        };
-      }
-    }, 1000)
-  }
+      };
+    }, 1000);
+  };
 
   const handleStartSortingAsc = () => {
-    sortingGeneratorRef.current = sortingGenerators[sortType](view, Direction.Ascending)
+    sortingGeneratorRef.current = sortingGenerators[sortType](view, Direction.Ascending);
     setSortDirection(Direction.Ascending);
     startSort();
-  }
+  };
 
   const handleStartSortingDesc = () => {
-    sortingGeneratorRef.current = sortingGenerators[sortType](view, Direction.Descending)
+    sortingGeneratorRef.current = sortingGenerators[sortType](view, Direction.Descending);
     setSortDirection(Direction.Descending);
     startSort();
-  }
+  };
 
   const handleChangeSortingType = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = evt.target;
     setSortType(value as SortingType);
-  }
+  };
 
   const randomArr = useCallback(() => {
     const minLen = 3;

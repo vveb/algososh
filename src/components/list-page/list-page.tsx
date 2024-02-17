@@ -11,8 +11,11 @@ import LinkedList from "../../utils/linked-list";
 import { LinkedListActions, LinkedListIsAnimated } from "../../types/linked-list.types";
 import { addElementAtIndexGenerator, addElementToHeadGenerator, addElementToTailGenerator, deleteElementFromHeadGenerator, deleteElementFromIndexGenerator, deleteElementFromTailGenerator } from "../../utils/generators";
 import { IterableViewWithStrings } from "../../types/generator.types";
+import { useMounted } from "../../hooks/use-mounted.hook";
 
 export const ListPage: React.FC = () => {
+
+  const isAlive = useMounted();
 
   const linkedList = useMemo(() => new LinkedList<string>(), []);
   const isLinkedListEmpty = useMemo(() => linkedList.isEmpty, [linkedList.isEmpty]);
@@ -67,16 +70,18 @@ export const ListPage: React.FC = () => {
 
   const runAnimation = useCallback(() => {
     animationRef.current = window.setInterval(() => {
-      if (linkedListGeneratorRef.current) {
-        const { value: view, done } = linkedListGeneratorRef.current.next();
-        if (view) {
-          setView(view);
-        };
-        if (done) {
-          window.clearInterval(animationRef.current);
-          animationRef.current = 0;
-          linkedListGeneratorRef.current = null;
-          stopAllAnimating();
+      if (isAlive) {
+        if (linkedListGeneratorRef.current) {
+          const { value: view, done } = linkedListGeneratorRef.current.next();
+          if (view) {
+            setView(view);
+          };
+          if (done) {
+            window.clearInterval(animationRef.current);
+            animationRef.current = 0;
+            linkedListGeneratorRef.current = null;
+            stopAllAnimating();
+          };
         };
       };
     }, 500);

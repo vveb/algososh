@@ -9,8 +9,11 @@ import Stack from "../../utils/stack";
 import { ElementStates } from "../../types/element-states";
 import { nanoid } from "nanoid";
 import { StackIsAnimated } from "../../types/stack.types";
+import { useMounted } from "../../hooks/use-mounted.hook";
 
 export const StackPage: React.FC = () => {
+
+  const isAlive = useMounted();
 
   const [data, setData] = useState<string>('');
   const [isAnimating, setIsAnimating] = useState<StackIsAnimated>({
@@ -39,11 +42,14 @@ export const StackPage: React.FC = () => {
       stack.push(data);
       setView((currentView) => [...currentView, {value: data, state: ElementStates.Changing, key: nanoid(8)}]);
       setTimeout(() => {
-        setView((currentView) => currentView.map((item) => item.state !== ElementStates.Default ?
-          {...item, state: ElementStates.Default} :
-          item));
-        setData('');
-        setIsAnimating({...isAnimating, isPushAnimating: false});
+        if (isAlive) {
+          setView((currentView) => currentView.map((item) => item.state !== ElementStates.Default ?
+            {...item, state: ElementStates.Default} :
+            item
+          ));
+          setData('');
+          setIsAnimating({...isAnimating, isPushAnimating: false});
+        };
       }, 500);
     };
   };
@@ -59,7 +65,7 @@ export const StackPage: React.FC = () => {
         stack.pop();
         setView((currentView) => currentView.filter((item) => item.state !== ElementStates.Changing));
         setIsAnimating({...isAnimating, isPopAnimating: false});
-      }, 500)
+      }, 500);
     };
   };
 
@@ -68,10 +74,12 @@ export const StackPage: React.FC = () => {
       setIsAnimating({...isAnimating, isClearAnimating: true});
       setView((currentView) => currentView.map((item) => ({...item, state: ElementStates.Changing})));
       setTimeout(() => {
-        stack.clear();
-        setView([]);
-        setIsAnimating({...isAnimating, isClearAnimating: false});
-      }, 500)
+        if (isAlive) {
+          stack.clear();
+          setView([]);
+          setIsAnimating({...isAnimating, isClearAnimating: false});
+        };
+      }, 500);
     };
   };
 
