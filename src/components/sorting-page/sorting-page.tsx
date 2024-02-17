@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { nanoid } from "nanoid";
 import styles from './sorting-page.module.css';
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
@@ -26,12 +26,12 @@ export const SortingPage: React.FC = () => {
   const sortingGeneratorRef = useRef<IterableViewWithNumbers | null>(null);
   const animationRef = useRef<number | undefined>(undefined);
 
-  const sortingGenerators = useMemo(() => ({
+  const sortingGenerators = {
     [SortingType.Selection]: selectionSortGenerator,
     [SortingType.Bubble]: bubbleSortGenerator,
-  }), []);
+  };
 
-  const isArrayEmpty = useMemo(() => view.length === 0, [view]);
+  const isArrayEmpty = view.length === 0;
 
   const startSort = () => {
     setIsAnimating(true);

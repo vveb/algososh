@@ -18,9 +18,15 @@ export const ListPage: React.FC = () => {
 
   const isAlive = useMounted();
 
+
   const linkedList = useMemo(() => new LinkedList<string>(), []);
   const isLinkedListEmpty = useMemo(() => linkedList.isEmpty, [linkedList.isEmpty]);
   const isLinkedListFull = useMemo(() => linkedList.size >= 6, [linkedList.size]);
+
+  // const linkedList = useMemo(() => new LinkedList<string>(), []);
+  // // const linkedListRef = useRef(new LinkedList<string>());
+  // const isLinkedListEmptyRef = useRef(linkedList.isEmpty);
+  // const isLinkedListFullRef = useRef(linkedList.size >= 6);
  
   const [view, setView] = useState<ViewItem<string>[]>([]);
 
@@ -37,7 +43,7 @@ export const ListPage: React.FC = () => {
 
   const [elementData, setElementData] = useState('');
   const [indexData, setIndexData] = useState(0);
-  const isIndexDataValid = useMemo(() => indexData >= 0 && indexData < view.length, [indexData, view.length]);
+  const isIndexDataValid = indexData >= 0 && indexData < view.length;
 
   const [isAnimating, setIsAnimating] = useState<LinkedListIsAnimated>({
     isAddToHeadAnimating: false,
