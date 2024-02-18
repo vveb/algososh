@@ -51,7 +51,7 @@ export const StringComponent: React.FC = () => {
     <SolutionLayout title="Строка">
       <form className={styles.form} onSubmit={handleSubmit}>
         <Input extraClass={styles.input} maxLength={11} isLimitText={true} value={inputData} onChange={handleInputChange}></Input>
-        <Button text='Развернуть' type="submit" isLoader={isAnimating} disabled={isAnimating}></Button>
+        <Button text='Развернуть' type="submit" isLoader={isAnimating} disabled={isAnimating || !inputData}></Button>
       </form>
       <div className={styles.visualization}>
         {view.map((item) => (<Circle letter={item.value} state={item.state} key={item.key} />))}

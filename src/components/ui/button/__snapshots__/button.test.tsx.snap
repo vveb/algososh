@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button rendering Button disabled rendering successfull 1`] = `
+<button
+  className="text text_type_button text_color_primary undefined undefined false "
+  disabled={true}
+  type="button"
+>
+  <p
+    className="text undefined"
+  />
+</button>
+`;
+
+exports[`Button rendering Button with loader rendering successfull 1`] = `
+<button
+  className="text text_type_button text_color_primary undefined undefined undefined "
+  disabled={true}
+  type="button"
+>
+  <img
+    alt="Загрузка."
+    src="test-file-stub"
+  />
+</button>
+`;
+
+exports[`Button rendering Button with text rendering successfull 1`] = `
+<button
+  className="text text_type_button text_color_primary undefined undefined false "
+  type="button"
+>
+  <p
+    className="text undefined"
+  >
+    Some text
+  </p>
+</button>
+`;
+
+exports[`Button rendering Button without text rendering successfull 1`] = `
+<button
+  className="text text_type_button text_color_primary undefined undefined false "
+  type="button"
+>
+  <p
+    className="text undefined"
+  />
+</button>
+`;
