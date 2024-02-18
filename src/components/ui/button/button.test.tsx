@@ -5,28 +5,28 @@ import { fireEvent, render, screen } from '@testing-library/react';
 
 describe('Button rendering', () => {
 
-  it('Button with text rendering successfull', () => {
+  it('should render Button component with text', () => {
     const tree = renderer
     .create(<Button text='Some text'/>)
     .toJSON();
     expect(tree).toMatchSnapshot();
   });
 
-  it('Button without text rendering successfull', () => {
+  it('should render Button component without text', () => {
     const tree = renderer
     .create(<Button />)
     .toJSON();
     expect(tree).toMatchSnapshot();
   });
 
-  it('Button disabled rendering successfull', () => {
+  it('should render Button component disabled', () => {
     const tree = renderer
     .create(<Button disabled={true} />)
     .toJSON();
     expect(tree).toMatchSnapshot();
   });
 
-  it('Button with loader rendering successfull', () => {
+  it('should render Button component with loader', () => {
     const tree = renderer
     .create(<Button isLoader={true} />)
     .toJSON();
@@ -35,7 +35,7 @@ describe('Button rendering', () => {
 });
 
 describe('some', () => {
-  it('Button has correct onClick event processing', () => {
+  it('should Button component have the correct handling of the callback for the onClick event', () => {
     window.alert = jest.fn();
     render(<Button onClick={() => alert('Button has clicked')}/>)
     const button = screen.getByRole('button');
