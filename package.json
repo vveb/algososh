@@ -45,5 +45,9 @@
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.3.3"
-  }
+  },
+  "main": "index.js",
+  "repository": "git@github.com:vveb/algososh.git",
+  "author": "Victor Tarapata <vvteach@yandex.ru>",
+  "license": "MIT"
 }

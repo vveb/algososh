@@ -1,0 +1,22 @@
+.form {
+  display: flex;
+  justify-content: center;
+  column-gap: 12px;
+}
+
+.input {
+  max-width: 377px;
+}
+
+.button {
+  min-width: 178px;
+}
+
+.visualization {
+  display: grid;
+  grid-template-columns: repeat(10, min-content);
+  justify-content: center;
+  margin-top: 48px;
+  column-gap: 16px;
+  row-gap: 78px;
+}

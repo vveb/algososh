@@ -1,0 +1,21 @@
+.form {
+  display: flex;
+  justify-content: center;
+  column-gap: 80px;
+  margin-bottom: 52px;
+}
+
+.controls {
+  display: flex;
+  column-gap: 12px;
+}
+
+.input {
+  min-width: 377px;
+}
+
+.visualization {
+  display: flex;
+  justify-content: center;
+  column-gap: 16px;
+}
