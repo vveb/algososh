@@ -24,7 +24,7 @@ export const ListPage: React.FC = () => {
   const isLinkedListFull = useMemo(() => linkedList.size >= 6, [linkedList.size]);
 
   // const linkedList = useMemo(() => new LinkedList<string>(), []);
-  // // const linkedListRef = useRef(new LinkedList<string>());
+  // const linkedListRef = useRef(new LinkedList<string>());
   // const isLinkedListEmptyRef = useRef(linkedList.isEmpty);
   // const isLinkedListFullRef = useRef(linkedList.size >= 6);
  

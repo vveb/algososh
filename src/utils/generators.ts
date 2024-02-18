@@ -8,12 +8,6 @@ import { makeInitialViewItem } from "./helpers";
 export function* reverseStringGenerator(str: string): IterableViewWithStrings {
   let current: string[] = str.split('');
   let res: ViewItem<string>[] = current.map((letter) => ({value: letter, state: ElementStates.Default, key: nanoid(8)}));
-  if (str === '') {
-    console.log('test')
-    // console.log([...res])
-    yield [...res]
-    return
-  }
   let temp;
   yield [...res];
   for (let i=0; i < Math.floor(current.length/2); i++) {
