@@ -1,311 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Circle rendering Circle with changing state rendering successfull 1`] = `
-<div
-  className="undefined "
->
-  <div
-    className="text text_type_input text_color_input mb-4 undefined undefined undefined"
-  />
-  <div
-    className="undefined   undefined"
-  >
-    <p
-      className="text text_type_circle text_color_input undefined"
-    />
-  </div>
-  <p
-    className="text text_type_input text_color_input mt-4 undefined undefined"
-  />
-  <div
-    className="text text_type_input text_color_input mt-4 undefined undefined undefined"
-  />
-</div>
-`;
-
-exports[`Circle rendering Circle with default state rendering successfull 1`] = `
-<div
-  className="undefined "
->
-  <div
-    className="text text_type_input text_color_input mb-4 undefined undefined undefined"
-  />
-  <div
-    className="undefined   undefined"
-  >
-    <p
-      className="text text_type_circle text_color_input undefined"
-    />
-  </div>
-  <p
-    className="text text_type_input text_color_input mt-4 undefined undefined"
-  />
-  <div
-    className="text text_type_input text_color_input mt-4 undefined undefined undefined"
-  />
-</div>
-`;
-
-exports[`Circle rendering Circle with head-reactElement rendering successfull 1`] = `
-<div
-  className="undefined "
->
-  <div
-    className="text text_type_input text_color_input mb-4 undefined undefined undefined"
-  >
-    <div
-      className="undefined "
-    >
-      <div
-        className="text text_type_input text_color_input mb-4 undefined undefined undefined"
-      />
-      <div
-        className="undefined   undefined"
-      >
-        <p
-          className="text text_type_circle text_color_input undefined"
-        />
-      </div>
-      <p
-        className="text text_type_input text_color_input mt-4 undefined undefined"
-      />
-      <div
-        className="text text_type_input text_color_input mt-4 undefined undefined undefined"
-      />
-    </div>
-  </div>
-  <div
-    className="undefined   undefined"
-  >
-    <p
-      className="text text_type_circle text_color_input undefined"
-    />
-  </div>
-  <p
-    className="text text_type_input text_color_input mt-4 undefined undefined"
-  />
-  <div
-    className="text text_type_input text_color_input mt-4 undefined undefined undefined"
-  />
-</div>
-`;
-
-exports[`Circle rendering Circle with head-string rendering successfull 1`] = `
-<div
-  className="undefined "
->
-  <div
-    className="text text_type_input text_color_input mb-4 undefined undefined undefined"
-  >
-    head
-  </div>
-  <div
-    className="undefined   undefined"
-  >
-    <p
-      className="text text_type_circle text_color_input undefined"
-    />
-  </div>
-  <p
-    className="text text_type_input text_color_input mt-4 undefined undefined"
-  />
-  <div
-    className="text text_type_input text_color_input mt-4 undefined undefined undefined"
-  />
-</div>
-`;
-
-exports[`Circle rendering Circle with index rendering successfull 1`] = `
-<div
-  className="undefined "
->
-  <div
-    className="text text_type_input text_color_input mb-4 undefined undefined undefined"
-  />
-  <div
-    className="undefined   undefined"
-  >
-    <p
-      className="text text_type_circle text_color_input undefined"
-    />
-  </div>
-  <p
-    className="text text_type_input text_color_input mt-4 undefined undefined"
-  >
-    0
-  </p>
-  <div
-    className="text text_type_input text_color_input mt-4 undefined undefined undefined"
-  />
-</div>
-`;
-
-exports[`Circle rendering Circle with isSmall prop === true rendering successfull 1`] = `
-<div
-  className="undefined "
->
-  <div
-    className="text text_type_input text_color_input mb-4 undefined undefined undefined"
-  />
-  <div
-    className="undefined  undefined undefined"
-  >
-    <p
-      className="text text_type_circle text_color_input undefined"
-    />
-  </div>
-  <p
-    className="text text_type_input text_color_input mt-4 undefined undefined"
-  />
-  <div
-    className="text text_type_input text_color_input mt-4 undefined undefined undefined"
-  />
-</div>
-`;
-
-exports[`Circle rendering Circle with letter rendering successfull 1`] = `
-<div
-  className="undefined "
->
-  <div
-    className="text text_type_input text_color_input mb-4 undefined undefined undefined"
-  />
-  <div
-    className="undefined   undefined"
-  >
-    <p
-      className="text text_type_circle text_color_input undefined"
-    >
-      A
-    </p>
-  </div>
-  <p
-    className="text text_type_input text_color_input mt-4 undefined undefined"
-  />
-  <div
-    className="text text_type_input text_color_input mt-4 undefined undefined undefined"
-  />
-</div>
-`;
-
-exports[`Circle rendering Circle with modified state rendering successfull 1`] = `
-<div
-  className="undefined "
->
-  <div
-    className="text text_type_input text_color_input mb-4 undefined undefined undefined"
-  />
-  <div
-    className="undefined   undefined"
-  >
-    <p
-      className="text text_type_circle text_color_input undefined"
-    />
-  </div>
-  <p
-    className="text text_type_input text_color_input mt-4 undefined undefined"
-  />
-  <div
-    className="text text_type_input text_color_input mt-4 undefined undefined undefined"
-  />
-</div>
-`;
-
-exports[`Circle rendering Circle with tail-reactElement rendering successfull 1`] = `
-<div
-  className="undefined "
->
-  <div
-    className="text text_type_input text_color_input mb-4 undefined undefined undefined"
-  />
-  <div
-    className="undefined   undefined"
-  >
-    <p
-      className="text text_type_circle text_color_input undefined"
-    />
-  </div>
-  <p
-    className="text text_type_input text_color_input mt-4 undefined undefined"
-  />
-  <div
-    className="text text_type_input text_color_input mt-4 undefined undefined undefined"
-  >
-    <div
-      className="undefined "
-    >
-      <div
-        className="text text_type_input text_color_input mb-4 undefined undefined undefined"
-      />
-      <div
-        className="undefined   undefined"
-      >
-        <p
-          className="text text_type_circle text_color_input undefined"
-        />
-      </div>
-      <p
-        className="text text_type_input text_color_input mt-4 undefined undefined"
-      />
-      <div
-        className="text text_type_input text_color_input mt-4 undefined undefined undefined"
-      />
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Circle rendering Circle with tail-string rendering successfull 1`] = `
-<div
-  className="undefined "
->
-  <div
-    className="text text_type_input text_color_input mb-4 undefined undefined undefined"
-  />
-  <div
-    className="undefined   undefined"
-  >
-    <p
-      className="text text_type_circle text_color_input undefined"
-    />
-  </div>
-  <p
-    className="text text_type_input text_color_input mt-4 undefined undefined"
-  />
-  <div
-    className="text text_type_input text_color_input mt-4 undefined undefined undefined"
-  >
-    head
-  </div>
-</div>
-`;
-
-exports[`Circle rendering Circle without letter rendering successfull 1`] = `
-<div
-  className="undefined "
->
-  <div
-    className="text text_type_input text_color_input mb-4 undefined undefined undefined"
-  />
-  <div
-    className="undefined   undefined"
-  >
-    <p
-      className="text text_type_circle text_color_input undefined"
-    />
-  </div>
-  <p
-    className="text text_type_input text_color_input mt-4 undefined undefined"
-  />
-  <div
-    className="text text_type_input text_color_input mt-4 undefined undefined undefined"
-  />
-</div>
-`;
-
 exports[`Circle rendering should render Circle component with changing state 1`] = `
 <div
   className="undefined "
+  data-cy="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 undefined undefined undefined"
@@ -329,6 +27,7 @@ exports[`Circle rendering should render Circle component with changing state 1`]
 exports[`Circle rendering should render Circle component with default state 1`] = `
 <div
   className="undefined "
+  data-cy="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 undefined undefined undefined"
@@ -352,12 +51,14 @@ exports[`Circle rendering should render Circle component with default state 1`] 
 exports[`Circle rendering should render Circle component with head-reactElement 1`] = `
 <div
   className="undefined "
+  data-cy="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 undefined undefined undefined"
   >
     <div
       className="undefined "
+      data-cy="circle"
     >
       <div
         className="text text_type_input text_color_input mb-4 undefined undefined undefined"
@@ -396,6 +97,7 @@ exports[`Circle rendering should render Circle component with head-reactElement 
 exports[`Circle rendering should render Circle component with head-string 1`] = `
 <div
   className="undefined "
+  data-cy="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 undefined undefined undefined"
@@ -421,6 +123,7 @@ exports[`Circle rendering should render Circle component with head-string 1`] = 
 exports[`Circle rendering should render Circle component with index 1`] = `
 <div
   className="undefined "
+  data-cy="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 undefined undefined undefined"
@@ -446,6 +149,7 @@ exports[`Circle rendering should render Circle component with index 1`] = `
 exports[`Circle rendering should render Circle component with isSmall prop === true 1`] = `
 <div
   className="undefined "
+  data-cy="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 undefined undefined undefined"
@@ -469,6 +173,7 @@ exports[`Circle rendering should render Circle component with isSmall prop === t
 exports[`Circle rendering should render Circle component with letter 1`] = `
 <div
   className="undefined "
+  data-cy="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 undefined undefined undefined"
@@ -494,6 +199,7 @@ exports[`Circle rendering should render Circle component with letter 1`] = `
 exports[`Circle rendering should render Circle component with modified state 1`] = `
 <div
   className="undefined "
+  data-cy="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 undefined undefined undefined"
@@ -517,6 +223,7 @@ exports[`Circle rendering should render Circle component with modified state 1`]
 exports[`Circle rendering should render Circle component with tail-reactElement 1`] = `
 <div
   className="undefined "
+  data-cy="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 undefined undefined undefined"
@@ -536,6 +243,7 @@ exports[`Circle rendering should render Circle component with tail-reactElement 
   >
     <div
       className="undefined "
+      data-cy="circle"
     >
       <div
         className="text text_type_input text_color_input mb-4 undefined undefined undefined"
@@ -561,6 +269,7 @@ exports[`Circle rendering should render Circle component with tail-reactElement 
 exports[`Circle rendering should render Circle component with tail-string 1`] = `
 <div
   className="undefined "
+  data-cy="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 undefined undefined undefined"
@@ -586,6 +295,7 @@ exports[`Circle rendering should render Circle component with tail-string 1`] = 
 exports[`Circle rendering should render Circle component without letter 1`] = `
 <div
   className="undefined "
+  data-cy="circle"
 >
   <div
     className="text text_type_input text_color_input mb-4 undefined undefined undefined"
