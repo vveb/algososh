@@ -28,14 +28,14 @@ describe('stack page features works correctly', () => {
       const circleChanging = cy.wrap(element).children(STATE_SELECTOR.changing);
       circleChanging.should('exist');
       circleChanging.should('contain', 7);
-      cy.wrap(element).children(CIRCLE_PARTS.head).should('exist');
+      cy.wrap(element).children(CIRCLE_PARTS.head).should('contain.text', 'top');
       cy.wrap(element).children(CIRCLE_PARTS.index).should('contain', index);
     });
     getDataCy('circle').each((element, index) => {
       const circleDefault = cy.wrap(element).children(STATE_SELECTOR.default);
       circleDefault.should('exist');
       circleDefault.should('contain', 7);
-      cy.wrap(element).children(CIRCLE_PARTS.head).should('exist');
+      cy.wrap(element).children(CIRCLE_PARTS.head).should('contain.text', 'top');
       cy.wrap(element).children(CIRCLE_PARTS.index).should('contain', index);
     });
   });
@@ -52,7 +52,7 @@ describe('stack page features works correctly', () => {
           const circleChanging = cy.wrap(element).children(STATE_SELECTOR.changing);
           circleChanging.should('exist');
           circleChanging.should('contain', number);
-          cy.wrap(element).children(CIRCLE_PARTS.head).should('contain', 'top');
+          cy.wrap(element).children(CIRCLE_PARTS.head).should('contain.text', 'top');
           cy.wrap(element).children(CIRCLE_PARTS.index).should('contain', index);
         } else {
           const circleDefault = cy.wrap(element).children(STATE_SELECTOR.default);
