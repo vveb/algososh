@@ -142,6 +142,7 @@ export const QueuePage: React.FC = () => {
             disabled={isAnyAnimating() || isQueueFull}
           />
           <Button
+            data-cy="addButton"
             text="Добавить"
             type="button"
             isLoader={isAnimating.isEnqueueAnimating}
@@ -149,6 +150,7 @@ export const QueuePage: React.FC = () => {
             onClick={handleEnqueueElement}
           />
           <Button
+            data-cy="removeButton"
             text="Удалить"
             type="button"
             isLoader={isAnimating.isDequeueAnimating}
@@ -157,12 +159,13 @@ export const QueuePage: React.FC = () => {
           />
         </div>
         <Button
-            text="Очистить"
-            type="button"
-            isLoader={isAnimating.isClearAnimating}
-            disabled={isAnyAnimating() || queue.isEmpty}
-            onClick={handleClearQueue}
-          />
+          data-cy="clearButton"
+          text="Очистить"
+          type="button"
+          isLoader={isAnimating.isClearAnimating}
+          disabled={isAnyAnimating() || queue.isEmpty}
+          onClick={handleClearQueue}
+        />
       </form>
       <div className={styles.visualization}>
         {!!view && view.map((item, index) => (

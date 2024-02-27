@@ -79,8 +79,8 @@ describe('stack page features works correctly', () => {
     getDataCy('circle').each((element, index) => {
       if (index === elements.length - 1) {
         cy.wrap(element).children(STATE_SELECTOR.changing).should('contain', 0);
-      }
-    })
+      };
+    });
     cy.wait(500);
     getDataCy('circle').children(STATE_SELECTOR.default).should('have.length', 4);
   });
