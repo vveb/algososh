@@ -1,5 +1,6 @@
 import { getDataCy } from "../../support/custom-commands";
 import { PATH } from '../../support/paths';
+import { STATE_SELECTOR } from "../../support/selectors";
 
 describe('fibonacci page features work correctly', () => {
 
@@ -9,7 +10,7 @@ describe('fibonacci page features work correctly', () => {
 
   it('button must be disabled while the input contains zero', () => {
     cy.get('form').children('button').as('submitButton');
-    cy.get('input').clear()
+    cy.get('input').clear();
     cy.get('input').should('have.value', '0');
     cy.get('@submitButton').should('be.disabled');
   });
@@ -24,7 +25,7 @@ describe('fibonacci page features work correctly', () => {
     getDataCy('circle').as('circles');
     for (let i=1; i<5; i++) {
       cy.get('@circles').should('have.length', i).each(($el, index) => {
-        cy.wrap($el).children('[class*=default]').should('contain', correctNumbers[index])
+        cy.wrap($el).children(STATE_SELECTOR.default).should('contain', correctNumbers[index])
       });
     };
   });

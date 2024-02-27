@@ -104,6 +104,7 @@ export const StackPage: React.FC = () => {
             disabled={isAnyAnimating()}
           />
           <Button
+            data-cy="addButton"
             text="Добавить"
             type="button"
             isLoader={isAnimating.isPushAnimating}
@@ -111,6 +112,7 @@ export const StackPage: React.FC = () => {
             onClick={handleAddElement}
           />
           <Button
+            data-cy="removeButton"
             text="Удалить"
             type="button"
             isLoader={isAnimating.isPopAnimating}
@@ -119,12 +121,13 @@ export const StackPage: React.FC = () => {
           />
         </div>
         <Button
-            text="Очистить"
-            type="button"
-            isLoader={isAnimating.isClearAnimating}
-            disabled={isAnyAnimating() || isStackEmpty}
-            onClick={handleClearStack}
-          />
+          data-cy="clearButton"
+          text="Очистить"
+          type="button"
+          isLoader={isAnimating.isClearAnimating}
+          disabled={isAnyAnimating() || isStackEmpty}
+          onClick={handleClearStack}
+        />
       </form>
       <div className={styles.visualization}>
         {!!view && view.map((item, index) => (

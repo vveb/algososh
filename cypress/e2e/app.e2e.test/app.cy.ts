@@ -1,12 +1,14 @@
+import { PATH } from "../../support/paths";
+
 describe('app is available', () => {
   it('should be available on localhost:3000', () => {
-    cy.visit('http://localhost:3000');
+    cy.visit(PATH.main);
   });
 });
 
 describe('app works correctly with routes', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:3000');
+    cy.visit(PATH.main);
   });
 
   it('should open main page by default', () => {
