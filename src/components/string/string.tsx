@@ -40,6 +40,7 @@ export const StringComponent: React.FC = () => {
             window.clearInterval(animationRef.current);
             animationRef.current = 0;
             reverseStringGeneratorRef.current = null;
+            setInputData('');
             setIsAnimating(false);
           };
         };
@@ -50,7 +51,14 @@ export const StringComponent: React.FC = () => {
   return (
     <SolutionLayout title="Строка">
       <form className={styles.form} onSubmit={handleSubmit}>
-        <Input extraClass={styles.input} maxLength={11} isLimitText={true} value={inputData} onChange={handleInputChange}></Input>
+        <Input
+          extraClass={styles.input}
+          maxLength={11}
+          isLimitText={true}
+          value={inputData}
+          onChange={handleInputChange}
+          disabled={isAnimating}
+        />
         <Button text='Развернуть' type="submit" isLoader={isAnimating} disabled={isAnimating || !inputData}></Button>
       </form>
       <div className={styles.visualization}>
