@@ -10,8 +10,7 @@ describe('fibonacci page features work correctly', () => {
 
   it('button must be disabled while the input contains zero', () => {
     cy.get('form').children('button').as('submitButton');
-    cy.get('input').clear();
-    cy.get('input').should('have.value', '0');
+    cy.get('input').clear().should('have.value', '0');
     cy.get('@submitButton').should('be.disabled');
   });
 
