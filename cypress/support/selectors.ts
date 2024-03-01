@@ -8,4 +8,7 @@ export const CIRCLE_PARTS = {
   head: '[class*=head]',
   index: '[class*=index]',
   tail: '[class*=tail]',
+  letter: '[class*=letter]',
 };
+
+export const SMALL_CIRCLE = '[class*=small]';

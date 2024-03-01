@@ -18,7 +18,6 @@ export const ListPage: React.FC = () => {
 
   const isAlive = useMounted();
 
-
   const linkedList = useMemo(() => new LinkedList<string>(), []);
   const isLinkedListEmpty = useMemo(() => linkedList.isEmpty, [linkedList.isEmpty]);
   const isLinkedListFull = useMemo(() => linkedList.size >= 6, [linkedList.size]);
@@ -31,7 +30,7 @@ export const ListPage: React.FC = () => {
   const [view, setView] = useState<ViewItem<string>[]>([]);
 
   useEffect(() => {
-    const arr = makeInitialView(Math.floor(Math.random()*6+1)).map((item) => ({
+    const arr = makeInitialView(4).map((item) => ({
       ...item,
       value: String(Math.floor(Math.random()*100)),
     }))
@@ -180,6 +179,7 @@ export const ListPage: React.FC = () => {
       <form className={styles.form}>
         <div className={styles.controls_top}>
           <Input
+            data-cy="valueInput"
             extraClass={styles.input}
             placeholder="Введите значение"
             type="text"
@@ -192,6 +192,7 @@ export const ListPage: React.FC = () => {
             disabled={isLinkedListFull || isAnyButtonAnimating()}
           />
           <Button
+            data-cy="addToHeadButton"
             extraClass={styles.smallButton}
             text="Добавить в head"
             type="button"
@@ -202,6 +203,7 @@ export const ListPage: React.FC = () => {
             onClick={handleAddElement}
           />
           <Button
+            data-cy="addToTailButton"
             extraClass={styles.smallButton}
             text="Добавить в tail"
             type="button"
@@ -212,6 +214,7 @@ export const ListPage: React.FC = () => {
             onClick={handleAddElement}
           />
           <Button
+            data-cy="removeFromHeadButton"
             extraClass={styles.smallButton}
             text="Удалить из head"
             type="button"
@@ -222,6 +225,7 @@ export const ListPage: React.FC = () => {
             onClick={handleDeleteElement}
           />
           <Button
+            data-cy="removeFromTailButton"
             extraClass={styles.smallButton}
             text="Удалить из tail"
             type="button"
@@ -233,7 +237,8 @@ export const ListPage: React.FC = () => {
           />
         </div>
         <div className={styles.controls_bottom}>
-        <Input
+          <Input
+            data-cy="indexInput"
             extraClass={styles.input}
             placeholder="Введите значение"
             type="number"
@@ -247,6 +252,7 @@ export const ListPage: React.FC = () => {
             disabled={isAnyButtonAnimating() || isLinkedListEmpty}
           />
           <Button
+            data-cy="addAtIndexButton"
             extraClass={styles.bigButton}
             text="Добавить по индексу"
             type="button"
@@ -261,6 +267,7 @@ export const ListPage: React.FC = () => {
             name={LinkedListActions.AddAtIndex}
           />
           <Button
+            data-cy="removeAtIndexButton"
             extraClass={styles.bigButton}
             text="Удалить по индексу"
             type="button"
