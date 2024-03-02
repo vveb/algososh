@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
+import React, { ChangeEvent, FormEvent, useCallback, useMemo, useState } from "react";
 import styles from './stack-page.module.css';
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Input } from "../ui/input/input";
@@ -37,7 +37,8 @@ export const StackPage: React.FC = () => {
   const stack = useMemo(() => new Stack<string>(), []);
   const isStackEmpty = useMemo(() => view.length === 0, [view]);
 
-  const handleAddElement = () => {
+  const handleAddElement = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
     if (inputData) {
       setIsAnimating({...isAnimating, isPushAnimating: true});
       stack.push(inputData);
@@ -90,7 +91,7 @@ export const StackPage: React.FC = () => {
 
   return (
     <SolutionLayout title="Стек">
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handleAddElement}>
         <div className={styles.controls}>
           <Input
             extraClass={styles.input}
@@ -106,10 +107,9 @@ export const StackPage: React.FC = () => {
           <Button
             data-cy="addButton"
             text="Добавить"
-            type="button"
+            type="submit"
             isLoader={isAnimating.isPushAnimating}
             disabled={isAnyAnimating() || !inputData}
-            onClick={handleAddElement}
           />
           <Button
             data-cy="removeButton"

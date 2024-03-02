@@ -1,4 +1,4 @@
-import { clearLinkedList, getDataCy } from "../../support/custom-commands";
+import { getDataCy } from "../../support/custom-commands";
 import { SHORT_DELAY } from "../../support/delays";
 import { PATH } from "../../support/paths";
 import { CIRCLE_PARTS, SMALL_CIRCLE, STATE_SELECTOR } from "../../support/selectors";
