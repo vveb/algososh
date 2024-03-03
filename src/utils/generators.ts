@@ -47,6 +47,10 @@ export function* calculateFiboGenerator(n: number): IterableViewWithNumbers {
 
 export function* selectionSortGenerator(arr: ViewItem<number>[], direction: Direction): IterableViewWithNumbers {
   let res: ViewItem<number>[] = arr;
+  if (res.length === 0) {
+    yield [...res];
+    return;
+  }
   for (let i=0; i < res.length-1; i++) {
     let targetIndex = i;
     res[targetIndex].state = ElementStates.Changing;
@@ -87,6 +91,10 @@ export function* selectionSortGenerator(arr: ViewItem<number>[], direction: Dire
 
 export function* bubbleSortGenerator(arr: ViewItem<number>[], direction: Direction): IterableViewWithNumbers {
   let res: ViewItem<number>[] = arr;
+  if (res.length === 0) {
+    yield [...res];
+    return;
+  }
   for (let i=0; i<res.length-1; i++) {
     for (let j=0; j<res.length-i-1; j++) {
       res[j].state = ElementStates.Changing;

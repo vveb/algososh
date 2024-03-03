@@ -69,7 +69,13 @@ export const FibonacciPage: React.FC = () => {
           placeholder="Введите число"
           disabled={isAnimating}
         />
-        <Button extraClass={styles.button} text="Рассчитать" type="submit" isLoader={isAnimating} disabled={isAnimating} />
+        <Button
+          extraClass={styles.button}
+          text="Рассчитать"
+          type="submit"
+          isLoader={isAnimating}
+          disabled={isAnimating || inputData === 0}
+        />
       </form>
       <div className={styles.visualization}>
         {view.map((item, index) => (<Circle letter={String(item.value)} index={index} state={item.state} key={item.key} />))}
