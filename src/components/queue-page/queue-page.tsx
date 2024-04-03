@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
+import React, { ChangeEvent, FormEvent, useCallback, useMemo, useState } from "react";
 import styles from './queue-page.module.css';
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { Input } from "../ui/input/input";
@@ -47,7 +47,8 @@ export const QueuePage: React.FC = () => {
   const queue = useMemo(() => new Queue<string>(), []);
   const isQueueFull = useMemo(() => queue.size >= 7, [queue.size]);
 
-  const handleEnqueueElement = () => {
+  const handleEnqueueElement = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
     queue.enqueue(inputData);
     setIsAnimating({...isAnimating, isEnqueueAnimating: true});
     if (head === null && tail === null) {
@@ -128,7 +129,7 @@ export const QueuePage: React.FC = () => {
 
   return (
     <SolutionLayout title="Очередь">
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handleEnqueueElement}>
         <div className={styles.controls}>
           <Input
             extraClass={styles.input}
@@ -142,13 +143,14 @@ export const QueuePage: React.FC = () => {
             disabled={isAnyAnimating() || isQueueFull}
           />
           <Button
+            data-cy="addButton"
             text="Добавить"
-            type="button"
+            type="submit"
             isLoader={isAnimating.isEnqueueAnimating}
             disabled={isAnyAnimating() || !inputData || isQueueFull}
-            onClick={handleEnqueueElement}
           />
           <Button
+            data-cy="removeButton"
             text="Удалить"
             type="button"
             isLoader={isAnimating.isDequeueAnimating}
@@ -157,12 +159,13 @@ export const QueuePage: React.FC = () => {
           />
         </div>
         <Button
-            text="Очистить"
-            type="button"
-            isLoader={isAnimating.isClearAnimating}
-            disabled={isAnyAnimating() || queue.isEmpty}
-            onClick={handleClearQueue}
-          />
+          data-cy="clearButton"
+          text="Очистить"
+          type="button"
+          isLoader={isAnimating.isClearAnimating}
+          disabled={isAnyAnimating() || queue.isEmpty}
+          onClick={handleClearQueue}
+        />
       </form>
       <div className={styles.visualization}>
         {!!view && view.map((item, index) => (
